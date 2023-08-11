@@ -1,0 +1,21 @@
+body, html {
+  margin: 0;
+  padding: 10px;
+}
+
+.grid {
+  display: grid;
+  height: calc(100vh - 40px);
+  justify-content: center;
+}
+
+.grid svg {
+  border-radius: 1px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.grid svg:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
