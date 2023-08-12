@@ -48,21 +48,6 @@ function updateSVG(id, color) {
     svgElement.querySelector("rect").setAttribute("fill", `#${color}`);
 }
 
-async function getDataById(id) {
-    const data = await fetch(`/data?id=${id}`)
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-
-    console.log(data);
-    return data;
-
-}
-
 async function getData() {
     const data = await fetch("/data")
         .then(response => response.json())
