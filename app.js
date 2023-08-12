@@ -1,9 +1,9 @@
-import { mint, maxSupply } from "./contract.js";
+import { mint } from "./contract.js";
 
 const socket = io();
 let data = {};
 
-let supply = 0;
+const supply = 999;
 const colorDefault = "#D6D1D8";
 
 function initSVG(totalItems) {
@@ -76,8 +76,6 @@ socket.on('update', data => {
 
 document.addEventListener("DOMContentLoaded", async function () {
     data = await getData();
-    //supply = await maxSupply();
-    supply = 999;
     updateElementSize();
     initSVG(supply)
 });
