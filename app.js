@@ -102,7 +102,6 @@ function updateElementSize() {
     const vh = window.innerHeight - 40;
     const nw = Math.sqrt((vw * supply) / vh)
     const gap = (vw / nw) / 6
-    console.log(gap)
     const nh = Math.sqrt((vh * supply) / (vw - (nw * (gap * 2))))
     const result = vh / nh;
 
