@@ -26,12 +26,12 @@ function createSVG(id) {
     const svg = document.createElementNS(svgNS, "svg");
     svg.setAttribute("xmlns", svgNS);
     svg.setAttribute("viewBox", viewBox);
+    svg.setAttribute("id", id);
 
     const rect = document.createElementNS(svgNS, "rect");
     rect.setAttribute("width", rectWidth);
     rect.setAttribute("height", rectHeight);
     rect.setAttribute("fill", fill);
-    svg.setAttribute("id", id);
 
     svg.appendChild(rect);
 
