@@ -25,11 +25,11 @@ function createSVG(id) {
 
     const container = document.createElement("div");
     container.classList = "svg-container"
+    container.setAttribute("id", id);
 
     const svg = document.createElementNS(svgNS, "svg");
     svg.setAttribute("xmlns", svgNS);
     svg.setAttribute("viewBox", viewBox);
-    svg.setAttribute("id", id);
 
     const rect = document.createElementNS(svgNS, "rect");
     rect.setAttribute("width", rectWidth);
@@ -45,7 +45,7 @@ function createSVG(id) {
     container.appendChild(svg);
     container.appendChild(tooltip);
 
-    svg.addEventListener("click", async function () {
+    container.addEventListener("click", async function () {
         const id = this.getAttribute("id");
         mint(id);
     });
@@ -53,9 +53,10 @@ function createSVG(id) {
     return container;
 }
 
-function updateSVG(id, color) {
-    const svgElement = document.getElementById(id);
-    svgElement.querySelector("rect").setAttribute("fill", `#${color}`);
+function updateSVG(data) {
+    const svgElement = document.getElementById(data.id);
+    svgElement.querySelector("rect").setAttribute("fill", `#${data.color}`);
+    svgElement.querySelector("div").textContent = data.color;
 }
 
 async function getData() {
@@ -79,7 +80,7 @@ function getElementData(id) {
 }
 
 socket.on('update', data => {
-    updateSVG(data.id, data.color)
+    updateSVG(data);
 });
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -91,9 +92,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 function updateElementSize() {
     const gapRatio = 0.2;
     const padding = 20;
+    const heightRatio = 0.92;
 
     const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
+    const windowHeight = window.innerHeight * heightRatio;
 
     const vw = (windowWidth - padding) * (1 - gapRatio);
     const vh = (windowHeight - padding) * (1 - gapRatio);

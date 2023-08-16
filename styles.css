@@ -13,6 +13,7 @@ body {
 .grid {
   display: grid;
   justify-content: center;
+  height: calc(90vh - 10px);;
 }
 
 .svg-container {
@@ -43,4 +44,35 @@ body {
 
 .grid svg:hover + .svg-tooltip{
   visibility: visible;
+}
+
+footer {
+  display: flex;
+  margin-top: 10px;
+  width: 100%;
+  height: calc(10vh - 10px);
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+footer div {
+  display: flex;
+  gap: 40px;
+  height: fit-content;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+p {
+  margin: 0;
+  font-size: 2vh;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+footer img {
+  height: 4vh;
 }

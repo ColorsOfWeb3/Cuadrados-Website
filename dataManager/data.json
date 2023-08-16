@@ -130,5 +130,17 @@
     "color": "C692E9",
     "owner": "0x5c8619e2fEf93f38c8C5bAe6C86cEA2050bbb7B9",
     "transaction": "0x94df282b94b74e23e0761b06de72c0dd391504d2069f58cc67af47b323ce628c"
+  },
+  {
+    "tokenId": 323,
+    "color": "C692E9",
+    "owner": "0x5c8619e2fEf93f38c8C5bAe6C86cEA2050bbb7B9",
+    "transaction": "0x5819b77d14395b3d63a35cf5bbbb5710262102ace8df35feb0b9771b19fafcea"
+  },
+  {
+    "tokenId": 311,
+    "color": "C692E9",
+    "owner": "0x5c8619e2fEf93f38c8C5bAe6C86cEA2050bbb7B9",
+    "transaction": "0x778308f579e90aa05aaa895cd32248f3a94b2ad123639caece10520aba1450c6"
   }
 ]
