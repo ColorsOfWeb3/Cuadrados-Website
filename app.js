@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 function updateElementSize() {
     const gapRatio = 0.2;
     const padding = 20;
-    const heightRatio = 0.92;
+    const heightRatio = 0.94;
 
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight * heightRatio;

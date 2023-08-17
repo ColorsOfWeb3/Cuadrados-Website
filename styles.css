@@ -13,7 +13,7 @@ body {
 .grid {
   display: grid;
   justify-content: center;
-  height: calc(90vh - 10px);;
+  height: calc(94vh - 20px)
 }
 
 .svg-container {
@@ -48,25 +48,29 @@ body {
 
 footer {
   display: flex;
-  margin-top: 10px;
   width: 100%;
-  height: calc(10vh - 10px);
+  height: calc(6vh - 10px);
   align-items: center;
   justify-content: space-between;
-  
+  padding: 10px 10px 0 10px;
 }
 
 footer div {
   display: flex;
-  gap: 40px;
+  gap: 10px;
   height: fit-content;
+  width: fit-content;
   flex-grow: 1;
   justify-content: center;
+  max-width: 25vw;
 }
 
 p {
   margin: 0;
-  font-size: 2vh;
+  overflow: hidden; 
+  font-size: 1.5vh;
+  text-overflow: ellipsis;
+  text-align: center;
 }
 
 footer a {
@@ -74,5 +78,5 @@ footer a {
 }
 
 footer img {
-  height: 4vh;
+  height: 3vh;
 }
