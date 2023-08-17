@@ -91,14 +91,15 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 function updateElementSize() {
     const gapRatio = 0.2;
-    const padding = 20;
+    const widthPnM = 20;
+    const heightPnM = 20;
     const heightRatio = 0.94;
 
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight * heightRatio;
 
-    const vw = (windowWidth - padding) * (1 - gapRatio);
-    const vh = (windowHeight - padding) * (1 - gapRatio);
+    const vw = (windowWidth - widthPnM) * (1 - gapRatio);
+    const vh = (windowHeight - heightPnM) * (1 - gapRatio);
 
     
     let area = vw * vh;
