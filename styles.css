@@ -14,45 +14,47 @@ body {
 .grid {
   display: grid;
   justify-content: center;
+  height: calc(94vh - 20px);
 }
 
-.svg-container {
+.cuadrado {
   position: relative;
   border-radius: 1px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.svg-container:hover {
+.cuadrado:hover{
   transform: scale(1.1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   z-index: 1;
 }
 
-.svg-tooltip {
+.tooltip {
   position: absolute;
   visibility: hidden;
   background-color: #2C3E50;
   color: #ECF0F1;
   padding: 5px;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 1.2vh;
   left: 50%;
+  bottom: -80%;
   transform: translateX(-50%);
   width: fit-content;
 }
 
-.grid svg:hover + .svg-tooltip{
+.cuadrado:hover .tooltip {
   visibility: visible;
 }
 
 footer {
   display: flex;
   width: 100%;
-  height: 6vh;
+  height: calc(6vh - 10px);
   align-items: center;
   justify-content: space-between;
-  padding: 10px 10px 0 10px;
+  margin-top: 10px;
 }
 
 footer div {
@@ -62,6 +64,7 @@ footer div {
   flex-grow: 1;
   justify-content: center;
   align-items: center;
+  text-align: center;
   max-width: 25vw;
 }
 

@@ -3,46 +3,34 @@ import { web3modal, WagmiCore, mint } from "./contract.js";
 const socket = io();
 let data = {};
 
-const supply = 1225;
+const supply = 1225; //35 x 35
 const dafaultColor = "95A5A6";
 
 function initSVG(totalItems) {
     const gridDiv = document.querySelector(".grid");
+    const delay = 1000 / totalItems;
     for (let i = 0; i < totalItems; i++) {
-        const svgImage = createSVG(i);
-        gridDiv.appendChild(svgImage);
+        setTimeout(() => {
+            const svgImage = createSVG(i);
+            gridDiv.appendChild(svgImage);
+        }, i * delay);
     }
 }
 
 function createSVG(id) {
     const data = getElementData(id);
 
-    const svgNS = "http://www.w3.org/2000/svg";
-    const viewBox = "0 0 100 100";
-    const rectWidth = "100%";
-    const rectHeight = "100%";
     let color = data ? data.color : dafaultColor;
 
     const container = document.createElement("div");
-    container.classList = "svg-container"
+    container.classList = "cuadrado"
     container.setAttribute("id", id);
-
-    const svg = document.createElementNS(svgNS, "svg");
-    svg.setAttribute("xmlns", svgNS);
-    svg.setAttribute("viewBox", viewBox);
-
-    const rect = document.createElementNS(svgNS, "rect");
-    rect.setAttribute("width", rectWidth);
-    rect.setAttribute("height", rectHeight);
-    rect.setAttribute("fill", `#${color}`);
-
-    svg.appendChild(rect);
+    container.style.background = `#${color}`
 
     const tooltip = document.createElement("div");
-    tooltip.classList = "svg-tooltip";
+    tooltip.classList = "tooltip";
     tooltip.textContent = color == dafaultColor ? "mint" : color;
 
-    container.appendChild(svg);
     container.appendChild(tooltip);
 
     container.addEventListener("click", async function () {
@@ -54,9 +42,9 @@ function createSVG(id) {
 }
 
 function updateSVG(data) {
-    const svgElement = document.getElementById(data.id);
-    svgElement.querySelector("rect").setAttribute("fill", `#${data.color}`);
-    svgElement.querySelector("div").textContent = data.color;
+    const cuadrado = document.getElementById(data.id);
+    cuadrado.style.background = `#${data.color}`
+    cuadrado.querySelector("div").textContent = data.color;
 }
 
 async function getData() {
@@ -87,7 +75,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     updateElementSize();
     initSVG(supply);
     const account = WagmiCore.getAccount();
-    console.log(account.address);
     const button = document.getElementById('connect');
     if (account.address) {
         button.innerHTML = "Connected";
