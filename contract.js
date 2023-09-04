@@ -57,7 +57,7 @@ async function manageError(name, message, options) {
             break;
         case "ChainMismatchError":
             try {
-                const network = await switchNetwork({
+                await switchNetwork({
                     chainId: 80001,
                 });
                 mint(options.tokenId);
@@ -70,10 +70,8 @@ async function manageError(name, message, options) {
     }
 }
 
-window.addEventListener('load', async () => {
-    web3modal.openModal()
-});
-
 export {
+    web3modal,
+    WagmiCore,
     mint
 }

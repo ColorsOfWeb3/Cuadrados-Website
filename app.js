@@ -1,4 +1,4 @@
-import { mint } from "./contract.js";
+import { web3modal, WagmiCore, mint } from "./contract.js";
 
 const socket = io();
 let data = {};
@@ -40,7 +40,7 @@ function createSVG(id) {
 
     const tooltip = document.createElement("div");
     tooltip.classList = "svg-tooltip";
-    tooltip.textContent = color;
+    tooltip.textContent = color == dafaultColor ? "mint" : color;
 
     container.appendChild(svg);
     container.appendChild(tooltip);
@@ -69,7 +69,6 @@ async function getData() {
             console.error('Error fetching data:', error);
         });
 
-    console.log(data);
     return data;
 
 }
@@ -86,8 +85,34 @@ socket.on('update', data => {
 document.addEventListener("DOMContentLoaded", async function () {
     data = await getData();
     updateElementSize();
-    initSVG(supply)
+    initSVG(supply);
+    const account = WagmiCore.getAccount();
+    console.log(account.address);
+    const button = document.getElementById('connect');
+    if (account.address) {
+        button.innerHTML = "Connected";
+        button.style.backgroundColor = "#3498DB";
+    } else {
+        web3modal.openModal();
+        button.style.backgroundColor = "#1ABC9C";
+    }
 });
+
+document.getElementById('connect').addEventListener('click', () => {
+    web3modal.openModal()
+})
+
+web3modal.subscribeModal(newState => {
+    const account = WagmiCore.getAccount();
+    const button = document.getElementById('connect');
+    if (account.address) {
+        button.innerHTML = "Connected";
+        button.style.backgroundColor = "#3498DB";
+    } else {
+        button.innerHTML = "Connect";
+        button.style.backgroundColor = "#1ABC9C";
+    }
+})
 
 function updateElementSize() {
     const gapRatio = 0.2;
@@ -101,7 +126,7 @@ function updateElementSize() {
     const vw = (windowWidth - widthPnM) * (1 - gapRatio);
     const vh = (windowHeight - heightPnM) * (1 - gapRatio);
 
-    
+
     let area = vw * vh;
     let squareArea = area / supply;
     let width = Math.sqrt(squareArea);
