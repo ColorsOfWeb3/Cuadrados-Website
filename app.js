@@ -6,10 +6,12 @@ let data = {};
 const supply = 1225; //35 x 35
 const dafaultColor = "95A5A6";
 
-function initSVG(totalItems) {
+async function initGrid() {
+    updateElementSize();
+    data = await getData();
     const gridDiv = document.querySelector(".grid");
-    const delay = 1000 / totalItems;
-    for (let i = 0; i < totalItems; i++) {
+    const delay = 0 / supply;
+    for (let i = 0; i < supply; i++) {
         setTimeout(() => {
             const svgImage = createSVG(i);
             gridDiv.appendChild(svgImage);
@@ -71,9 +73,7 @@ socket.on('update', data => {
 });
 
 document.addEventListener("DOMContentLoaded", async function () {
-    data = await getData();
-    updateElementSize();
-    initSVG(supply);
+    initGrid();
     const account = WagmiCore.getAccount();
     const button = document.getElementById('connect');
     if (account.address) {
@@ -102,36 +102,26 @@ web3modal.subscribeModal(newState => {
 })
 
 function updateElementSize() {
-    const gapRatio = 0.2;
-    const widthPnM = 20;
-    const heightPnM = 20;
-    const heightRatio = 0.94;
+    const gapRatio = 0.16;
+    const grid = document.querySelector('.grid');
 
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight * heightRatio;
+    const windowWidth = grid.clientWidth;
+    const windowHeight = grid.clientHeight;
 
-    const vw = (windowWidth - widthPnM) * (1 - gapRatio);
-    const vh = (windowHeight - heightPnM) * (1 - gapRatio);
-
-
-    let area = vw * vh;
+    let area = windowWidth * windowHeight;
     let squareArea = area / supply;
-    let width = Math.sqrt(squareArea);
+    let squareWidth = Math.sqrt(squareArea);
 
-    let nw = vw / width;
-    let nh = vh / width;
+    let columns = windowWidth / squareWidth;
+    squareWidth = (squareWidth *  Math.round(columns)) / columns;
 
-    const gapW = (windowWidth * gapRatio) / nw;
-    const gapH = (windowHeight * gapRatio) / nh;
+    let gap = squareWidth * gapRatio;
+    let size = squareWidth - gap;
 
-    const gap = Math.min(gapW, gapH)
-
-    const result = width - ((width + gap) / Math.max(nw, nh));
-
-    const element = document.getElementById('grid');
-    element.style.gridTemplateColumns = `repeat(auto-fit, ${result}px)`;
-    element.style.gridAutoRows = `${result}px`;
-    element.style.gap = `${gap}px`
+    grid.style.gridTemplateColumns = `repeat(auto-fill, ${size}px)`;
+    //grid.style.gridAutoRows = `${size}px`;
+    grid.style.gap = `${gap}px`;
+    //grid.style.height = `${windowHeight}px`;
 }
 
 window.addEventListener('resize', updateElementSize);

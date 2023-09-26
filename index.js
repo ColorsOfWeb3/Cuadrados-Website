@@ -12,7 +12,13 @@ app.use(express.static(__dirname));
 
 app.get("/", (req, res) => {
 
-    res.render("html");
+    res.render("index.html");
+
+});
+
+app.get("/app", (req, res) => {
+
+    res.redirect("app.html");
 
 });
 
