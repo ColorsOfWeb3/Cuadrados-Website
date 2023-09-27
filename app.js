@@ -4,7 +4,7 @@ const socket = io();
 let data = {};
 
 const supply = 1225; //35 x 35
-const dafaultColor = "95A5A6";
+const dafaultColor = "dcdde1";
 
 async function initGrid() {
     updateElementSize();

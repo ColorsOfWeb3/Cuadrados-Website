@@ -12,7 +12,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 4%;
+    flex-wrap: wrap;
+    gap: min(8vh, 16vw);
     width: 100%;
 }
 
@@ -27,40 +28,40 @@ body {
 }
 
 .icon {
-    height: 3vh;
+    height: min(3vh, 6vw);
 }
 
 button {
     background-color: #dcdde1;
     color: #353b48;
-    border-radius: 1.2vh;
+    border-radius: min(0.6vh, 1.2vw);
     border: none;
-    font-size: 2vh;
-    padding: 0.8vh 1.2vh 0.8vh 1.2vh;
+    font-size: min(2vh, 4vw);
+    padding: min(0.8vh, 1.6vw);
     cursor: pointer;
     width: fit-content;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: .3s;
 }
 
 button:hover {
     transform: scale(1.1);
-    box-shadow: 0 0.2vh 0.6vh rgba(0, 0, 0, 0.3);
+    box-shadow: 0 min(0.2vh, 0.4vw) min(0.6vh, 1.2vw) hsla(215, 15%, 22%, 0.3);
   }
 
 h1 {
-    font-size: 6vh;
+    font-size: min(6vh, 12vw);
     color: #2f3640;
     margin: 0;
 }
 
 h2 {
-    font-size: 4vh;
+    font-size: min(4vh, 8vw);
     color: #353b48;
     margin: 0;
 }
 
 h3 {
-    font-size: 2vh;
+    font-size: min(2vh, 4vw);
     color: #718093;
     margin: 0;
 }
@@ -70,8 +71,9 @@ a {
   }
 
 .cuadrado {
-    border-radius: 2vh;
+    border-radius: min(2vh, 4vw);
     height: 40vh;
+    max-height: 80vw;
     aspect-ratio: 1;
     animation: float 15s ease-in-out infinite;
     background: linear-gradient(
@@ -85,17 +87,17 @@ a {
 
 @keyframes float {
 	0% {
-		box-shadow: 0 0.5vh 1.5vh 0px rgba(0,0,0,0.6);
+		box-shadow: 0 min(0.5vh, 1vw) min(1.5vh, 2vw) 0px rgba(0,0,0,0.6);
         background-position: 0% 50%;
 		transform: translatey(0px);
 	}
 	50% {
-		box-shadow: 0 2.5vh 1.5vh  0px rgba(0,0,0,0.2);
+		box-shadow: 0 min(2.5vh, 5vw) min(1.5vh, 2vw)  0px rgba(0,0,0,0.2);
         background-position: 100% 50%;
 		transform: translatey(-20px);
 	}
 	100% {
-		box-shadow: 0 0.5vh 1.5vh 0px rgba(0,0,0,0.6);
+		box-shadow: 0 min(0.5vh, 1vw) min(1.5vh, 2vw) 0px rgba(0,0,0,0.6);
         background-position: 0% 50%;
 		transform: translatey(0px);
 	}
