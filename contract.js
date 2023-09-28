@@ -1,3 +1,5 @@
+import { dialogColor, dialogIcon, showDialog, showAndHideDialog } from './miscellaneous.js';
+
 import contractABI from './web3/ABI.json' assert { type: "json" };
 
 const contractAddress = '0x2bA9aD99995484cf9ad205f37d4Bd679a4a67281';
@@ -62,11 +64,13 @@ async function manageError(name, message, options) {
                 });
                 mint(options.tokenId);
             } catch (error) {
-                alert("Network error: Switch to Polygon Mumbai")
+                //alert("Network error: Switch to Polygon Mumbai")
+                showAndHideDialog('Switch to Polygon Mumbai', dialogColor.red, dialogIcon.shuffle, 4000)
             }
             break;
         default:
             console.error('Error:', message);
+            showAndHideDialog('Error: ' + message, dialogColor.red, dialogIcon.alert, 4000)
     }
 }
 

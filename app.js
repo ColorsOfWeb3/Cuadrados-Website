@@ -1,4 +1,5 @@
 import { web3modal, WagmiCore, mint } from "./contract.js";
+import { dialogColor, dialogIcon, showDialog, hideDialog, showAndHideDialog } from './miscellaneous.js';
 
 const socket = io();
 let data = {};
@@ -72,35 +73,6 @@ socket.on('update', data => {
     updateSVG(data);
 });
 
-document.addEventListener("DOMContentLoaded", async function () {
-    initGrid();
-    const account = WagmiCore.getAccount();
-    const button = document.getElementById('connect');
-    if (account.address) {
-        button.innerHTML = "Connected";
-        button.style.backgroundColor = "#3498DB";
-    } else {
-        web3modal.openModal();
-        button.style.backgroundColor = "#1ABC9C";
-    }
-});
-
-document.getElementById('connect').addEventListener('click', () => {
-    web3modal.openModal()
-})
-
-web3modal.subscribeModal(newState => {
-    const account = WagmiCore.getAccount();
-    const button = document.getElementById('connect');
-    if (account.address) {
-        button.innerHTML = "Connected";
-        button.style.backgroundColor = "#3498DB";
-    } else {
-        button.innerHTML = "Connect";
-        button.style.backgroundColor = "#1ABC9C";
-    }
-})
-
 function updateElementSize() {
     const gapRatio = 0.16;
     const grid = document.querySelector('.grid');
@@ -125,3 +97,23 @@ function updateElementSize() {
 }
 
 window.addEventListener('resize', updateElementSize);
+
+web3modal.subscribeModal(newState => {
+    const account = WagmiCore.getAccount();
+    if (account.address) {
+        showAndHideDialog('Wallet connected!', dialogColor.green, dialogIcon.party, 2000);
+    } else {
+        showDialog('Click on square to connect your wallet!', dialogColor.blue, dialogIcon.bell)
+    }
+})
+
+document.addEventListener("DOMContentLoaded", async function () {
+    initGrid();
+    const account = WagmiCore.getAccount();
+    if (account.address) {
+        showAndHideDialog('Wallet connected!', dialogColor.green, dialogIcon.party, 2000);
+    } else {
+        web3modal.openModal();
+        button.style.backgroundColor = "#1ABC9C";
+    }
+});
