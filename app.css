@@ -53,7 +53,7 @@ body {
 .dialog {
   position: absolute;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: min(0.8vh, 1.6vw);
   opacity: 0;
   font-size: min(2vh, 4vw);
@@ -67,4 +67,14 @@ body {
   width: fit-content;
   max-width: 50%;
   transition: opacity 1s;
+}
+
+.dialog > button {
+    font-size: min(2vh, 4vw);
+    background:none;
+    border:none;
+    margin:0 0 0 min(1vh, 2vw);
+    padding:0;
+    cursor: pointer;
+    transition: all 200ms;
 }

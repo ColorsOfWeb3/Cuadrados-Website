@@ -117,3 +117,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         button.style.backgroundColor = "#1ABC9C";
     }
 });
+
+document.getElementById('dialogClose').addEventListener("click", async function () {
+    hideDialog();
+});
