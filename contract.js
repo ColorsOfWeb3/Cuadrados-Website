@@ -68,9 +68,15 @@ async function manageError(name, message, options) {
                 showAndHideDialog('Switch to Polygon Mumbai', dialogColor.red, dialogIcon.shuffle, 4000)
             }
             break;
+        case 'TransactionExecutionError':
+            showAndHideDialog("Transaction error", dialogColor.red, dialogIcon.alert, 4000)
+            break;
+        case "ContractFunctionExecutionError":
+            showAndHideDialog('Execution error', dialogColor.red, dialogIcon.alert, 4000)
+            break;
         default:
             console.error('Error:', message);
-            showAndHideDialog('Error: ' + message, dialogColor.red, dialogIcon.alert, 4000)
+            showAndHideDialog('Unaddressed error', dialogColor.red, dialogIcon.alert, 4000)
     }
 }
 

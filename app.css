@@ -63,9 +63,8 @@ body {
   padding: min(0.8vh, 1.6vw) min(2vh, 4vw) min(1vh, 2vw) min(2vh, 4vw);
   left: 50%;
   bottom: 4%;
+  max-width: 80%;
   transform: translateX(-50%);
-  width: fit-content;
-  max-width: 50%;
   transition: opacity 1s;
 }
 
