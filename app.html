@@ -8,15 +8,17 @@
     <script src="contract.js" type="module"></script>
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
     <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 
 <body>
-    <div id="grid" class="grid"></div>
-    <div class="dialog" id="dialog">
-        <div id="dialogIcon"></div>
-        <div id="dialogTitle"></div>
-        <button id="dialogClose">x</button>
+    <div id="grid" class="grid">
+        <div class="dialog" id="dialog">
+            <div id="dialogIcon"></div>
+            <div id="dialogTitle"></div>
+            <a id="dialogLink" href="#"></a>
+            <button id="dialogClose">x</button>
+        </div>
     </div>
 </body>
 </html>

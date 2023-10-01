@@ -1,5 +1,5 @@
-import { web3modal, WagmiCore, mint } from "./contract.js";
-import { dialogColor, dialogIcon, showDialog, hideDialog, showAndHideDialog } from './miscellaneous.js';
+import { connect, changeNetwork, subscribe, account, mint } from "./contract.js";
+import { dialogColor, dialogIcon, showDialog, hideDialog } from './miscellaneous.js';
 
 const socket = io();
 let data = {};
@@ -38,7 +38,18 @@ function createSVG(id) {
 
     container.addEventListener("click", async function () {
         const id = this.getAttribute("id");
-        mint(id);
+        const response = await mint(id);
+        if (response.status == 'OK') {
+            showDialog(`Minting Cuadrado #${id}...`, dialogColor.blue, dialogIcon.alert, {
+                duration: 6000,
+                link: {
+                    url: "https://mumbai.polygonscan.com/tx/" + response.value,
+                    title: "Transaction details"
+                }
+            })
+        } else {
+            manageError(response.value, {tokenId: id})
+        }
     });
 
     return container;
@@ -61,7 +72,6 @@ async function getData() {
         });
 
     return data;
-
 }
 
 function getElementData(id) {
@@ -91,33 +101,84 @@ function updateElementSize() {
     let size = squareWidth - gap;
 
     grid.style.gridTemplateColumns = `repeat(auto-fill, ${size}px)`;
-    //grid.style.gridAutoRows = `${size}px`;
     grid.style.gap = `${gap}px`;
-    //grid.style.height = `${windowHeight}px`;
 }
 
 window.addEventListener('resize', updateElementSize);
 
-web3modal.subscribeModal(newState => {
-    const account = WagmiCore.getAccount();
-    if (account.address) {
-        showAndHideDialog('Wallet connected!', dialogColor.green, dialogIcon.party, 2000);
-    } else {
-        showDialog('Click on square to connect your wallet!', dialogColor.blue, dialogIcon.bell)
-    }
-})
-
 document.addEventListener("DOMContentLoaded", async function () {
     initGrid();
-    const account = WagmiCore.getAccount();
-    if (account.address) {
-        showAndHideDialog('Wallet connected!', dialogColor.green, dialogIcon.party, 2000);
+    const user = account();
+    if (user.address) {
+        showDialog('Wallet connected!', dialogColor.green, dialogIcon.party, {
+            duration: 2000
+        });
     } else {
-        web3modal.openModal();
-        button.style.backgroundColor = "#1ABC9C";
+        connect();
     }
+    subscribe(() => {
+        const user = account();
+        if (user.address) {
+            showDialog('Wallet connected!', dialogColor.green, dialogIcon.party, {
+                duration: 2000
+            });
+        } else {
+            showDialog('Click on square to connect your wallet!', dialogColor.blue, dialogIcon.bell, {
+                link: {
+                    url: 'https://metamask.io/',
+                    title: 'Get Metamask here'
+                }
+            })
+        }
+    })
 });
 
 document.getElementById('dialogClose').addEventListener("click", async function () {
     hideDialog();
 });
+
+async function manageError(error, options) {
+    const message = error.message.replace(/(\r\n|\r|\n)/g, '<br>');
+    switch (error.name) {
+        case 'ConnectorNotFoundError':
+            connect();
+            break;
+        case "ChainMismatchError":
+            try {
+                await changeNetwork();
+                mint(options.tokenId);
+            } catch (error) {
+                showDialog('Switch to Polygon Mumbai', dialogColor.red, dialogIcon.shuffle, {
+                    duration: 4000
+                })
+            }
+            break;
+        case 'TransactionExecutionError':
+            showDialog("Transaction error", dialogColor.red, dialogIcon.alert, {
+                duration: 4000,
+                link: {
+                    url:'./log.html?message=' + message,
+                    title: 'See details'
+                }
+            })
+            break;
+        case "ContractFunctionExecutionError":
+            showDialog('Execution error', dialogColor.red, dialogIcon.alert, {
+                duration: 4000,
+                link: {
+                    url:'./log.html?message=' + message,
+                    title: 'See details'
+                }
+            })
+            break;
+        default:
+            console.error('Error:', message);
+            showDialog('Unaddressed error', dialogColor.red, dialogIcon.alert, {
+                duration: 4000,
+                link: {
+                    url:'./log.html?message=' + message,
+                    title: 'See details'
+                }
+            })
+    }
+}

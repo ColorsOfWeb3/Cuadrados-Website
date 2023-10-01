@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Cuadrados, colors of Web3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+    <code id="log"></code>
+    <script>
+        const params = new URL(window.location.toLocaleString()).searchParams;
+        document.getElementById('log').innerHTML = params.get('message');
+    </script>
+</body>
+</html>

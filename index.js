@@ -7,21 +7,6 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 global.io = io;
 
-
-app.use(express.static(__dirname));
-
-app.get("/", (req, res) => {
-
-    res.render("index.html");
-
-});
-
-app.get("/app", (req, res) => {
-
-    res.redirect("app.html");
-
-});
-
 app.get("/data", (req, res) => {
 
     let data = {};

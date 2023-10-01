@@ -1,5 +1,3 @@
-import { dialogColor, dialogIcon, showDialog, showAndHideDialog } from './miscellaneous.js';
-
 import contractABI from './web3/ABI.json' assert { type: "json" };
 
 const contractAddress = '0x2bA9aD99995484cf9ad205f37d4Bd679a4a67281';
@@ -35,6 +33,26 @@ const ethereumClient = new EthereumClient(wagmiConfig, chains);
 const web3modal = new Web3Modal({ projectId }, ethereumClient)
 web3modal.setDefaultChain(polygonMumbai)
 
+function connect() {
+    web3modal.openModal();
+}
+
+async function changeNetwork() {
+    await switchNetwork({
+        chainId: 80001,
+    });
+}
+
+function subscribe(callback) {
+    web3modal.subscribeModal(newState => {
+        callback();
+    })
+}
+
+function account() {
+    return WagmiCore.getAccount();
+}
+
 async function mint(tokenId) {
     try {
         const { hash } = await writeContract({
@@ -45,43 +63,33 @@ async function mint(tokenId) {
             chainId: 80001
         })
 
-
-        console.log('Minting transaction hash:', hash);
-    } catch ({ name, message }) {
-        manageError(name, message, { tokenId: tokenId });
+        return {status: 'OK', value: hash}
+    } catch (error) {
+        return {status: 'KO', value: error}
     }
 }
 
-async function manageError(name, message, options) {
-    switch (name) {
-        case "ConnectorNotFoundError":
-            web3modal.openModal();
-            break;
-        case "ChainMismatchError":
-            try {
-                await switchNetwork({
-                    chainId: 80001,
-                });
-                mint(options.tokenId);
-            } catch (error) {
-                //alert("Network error: Switch to Polygon Mumbai")
-                showAndHideDialog('Switch to Polygon Mumbai', dialogColor.red, dialogIcon.shuffle, 4000)
-            }
-            break;
-        case 'TransactionExecutionError':
-            showAndHideDialog("Transaction error", dialogColor.red, dialogIcon.alert, 4000)
-            break;
-        case "ContractFunctionExecutionError":
-            showAndHideDialog('Execution error', dialogColor.red, dialogIcon.alert, 4000)
-            break;
-        default:
-            console.error('Error:', message);
-            showAndHideDialog('Unaddressed error', dialogColor.red, dialogIcon.alert, 4000)
+async function getOwner(tokenId) {
+    try {
+        const data = await readContract({
+            address: contractAddress,
+            abi: wagmigotchiABI,
+            functionName: 'ownerOf',
+            args: [tokenId],
+            chainId: 80001
+        })
+
+
+        console.log('Minting transaction hash:', hash);
+    } catch (error) {
+        manageError(error, { tokenId: tokenId });
     }
 }
 
 export {
-    web3modal,
-    WagmiCore,
+    connect,
+    changeNetwork,
+    subscribe,
+    account,
     mint
 }

@@ -5,15 +5,15 @@ html {
 }
 
 body {
-  position: relative;
   margin: 0;
-  padding: 10px;
+  padding: min(4vh, 8vw);
   font-family: 'Roboto', sans-serif;
   overflow: hidden;
-  height: calc(100vh - 20px)
+  height: calc(100vh - min(8vh, 16vw))
 }
 
 .grid {
+  position: relative;
   display: grid;
   justify-content: center;
   width: 100%;
@@ -59,21 +59,29 @@ body {
   font-size: min(2vh, 4vw);
   font-weight: bold;
   background-color: #dcdde1cc;
+  color: #f5f6fa;
   border-radius: min(2vh, 4vw);
   padding: min(0.8vh, 1.6vw) min(2vh, 4vw) min(1vh, 2vw) min(2vh, 4vw);
   left: 50%;
-  bottom: 4%;
-  max-width: 80%;
+  bottom: 2%;
   transform: translateX(-50%);
-  transition: opacity 1s;
+  transition: opacity .4s;
+  z-index: 1;
 }
+
+.dialog > a {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+ 
 
 .dialog > button {
     font-size: min(2vh, 4vw);
+    color: #dcdde1;
     background:none;
     border:none;
     margin:0 0 0 min(1vh, 2vw);
     padding:0;
     cursor: pointer;
-    transition: all 200ms;
 }
