@@ -106,7 +106,7 @@ function updateElementSize() {
 
 window.addEventListener('resize', updateElementSize);
 
-document.addEventListener("DOMContentLoaded", async function () {
+window.onload =  async (event) => {
     initGrid();
     const user = account();
     if (user.address) {
@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             })
         }
     })
-});
+};
 
 document.getElementById('dialogClose').addEventListener("click", async function () {
     hideDialog();
