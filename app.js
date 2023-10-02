@@ -95,12 +95,12 @@ function updateElementSize() {
     let squareWidth = Math.sqrt(squareArea);
 
     let columns = windowWidth / squareWidth;
-    squareWidth = (squareWidth *  Math.round(columns)) / columns;
+    squareWidth = squareWidth *  (2 - Math.round(columns) / columns);
 
     let gap = squareWidth * gapRatio;
     let size = squareWidth - gap;
 
-    grid.style.gridTemplateColumns = `repeat(auto-fill, ${size}px)`;
+    grid.style.gridTemplateColumns = `repeat(${Math.round(columns)}, ${size}px)`;
     grid.style.gap = `${gap}px`;
 }
 
@@ -111,7 +111,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     const user = account();
     if (user.address) {
         showDialog('Wallet connected!', dialogColor.green, dialogIcon.party, {
-            duration: 2000
+            duration: 4000,
+            onclick: {
+                function: connect,
+                title: 'Manage wallet'
+            }
         });
     } else {
         connect();
@@ -120,7 +124,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         const user = account();
         if (user.address) {
             showDialog('Wallet connected!', dialogColor.green, dialogIcon.party, {
-                duration: 2000
+                duration: 4000,
+                onclick: {
+                    function: connect,
+                    title: 'Manage wallet'
+                }
             });
         } else {
             showDialog('Click on square to connect your wallet!', dialogColor.blue, dialogIcon.bell, {

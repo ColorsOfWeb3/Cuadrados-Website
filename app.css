@@ -2,14 +2,16 @@ html {
   margin: 0;
   padding: 0;
   background-color: #FFFFFF;
+  height: 100%;
+  width: 100%;
 }
 
 body {
   margin: 0;
-  padding: min(4vh, 8vw);
+  padding: min(2vh, 4vw);
   font-family: 'Roboto', sans-serif;
   overflow: hidden;
-  height: calc(100vh - min(8vh, 16vw))
+  height: calc(100% - min(4vh, 8vw));
 }
 
 .grid {
@@ -55,9 +57,9 @@ body {
   display: flex;
   align-items: center;
   gap: min(0.8vh, 1.6vw);
-  opacity: 0;
   font-size: min(2vh, 4vw);
   font-weight: bold;
+  opacity: 0;
   background-color: #dcdde1cc;
   color: #f5f6fa;
   border-radius: min(2vh, 4vw);
@@ -65,7 +67,8 @@ body {
   left: 50%;
   bottom: 2%;
   transform: translateX(-50%);
-  transition: opacity .4s;
+  visibility: hidden;
+  transition: opacity .4s, visibility .4s;
   z-index: 1;
 }
 

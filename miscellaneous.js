@@ -22,20 +22,29 @@ function showDialog(message, color, icon, options) {
     if (options.link !== undefined) {
         document.getElementById('dialogLink').setAttribute('href', options.link.url);
         document.getElementById('dialogLink').innerHTML = options.link.title;
-    } else {
-        document.getElementById('dialogLink').innerHTML = '';
+    }
+    if (options.onclick !== undefined) {
+        document.getElementById('dialogLink').addEventListener('click', () => {
+            options.onclick.function();
+        })
+        document.getElementById('dialogLink').innerHTML = options.onclick.title;
     }
     document.getElementById('dialog').style.backgroundColor = color;
     document.getElementById('dialog').style.opacity = '100';
+    document.getElementById('dialog').style.visibility = 'visible';
     if (options.duration !== undefined) {
         setTimeout(() => {
             document.getElementById('dialog').style.opacity = '0';
+            document.getElementById('dialog').style.visibility = 'hidden';
+            document.getElementById('dialogLink').innerHTML = '';
         }, options.duration);
     }
 }
 
 function hideDialog() {
     document.getElementById('dialog').style.opacity = '0';
+    document.getElementById('dialog').style.visibility = 'hidden';
+    document.getElementById('dialogLink').innerHTML = '';
 }
 
 export {
