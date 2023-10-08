@@ -1,6 +1,6 @@
 const express = require("express");
 const { read, searchByTokenId } = require("./dataManager/dataManager.js")
-const { init } = require("./manager");
+const { initDataManager, updateDataInBatch } = require("./manager");
 
 const app = express();
 const server = require('http').createServer(app);
@@ -31,6 +31,7 @@ app.get("/data", (req, res) => {
 
 });
 
-init();
+updateDataInBatch(0, 1225);
+initDataManager();
 
 server.listen(process.env.PORT || 3000, () => console.log(`App available on http://localhost:3000`))

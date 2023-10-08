@@ -18,10 +18,11 @@ async function getTokenURI(tokenId) {
 }
 
 async function getOwner(tokenId) {
-    const uri = await contract.methods.ownerOf(tokenId).call();
-    return uri;
+    const owner = await contract.methods.ownerOf(tokenId).call();
+    return owner;
 }
 
 module.exports = {
-    getTokenURI
+    getTokenURI,
+    getOwner
 }

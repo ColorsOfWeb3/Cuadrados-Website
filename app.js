@@ -14,13 +14,13 @@ async function initGrid() {
     const delay = 0 / supply;
     for (let i = 0; i < supply; i++) {
         setTimeout(() => {
-            const svgImage = createSVG(i);
+            const svgImage = createCuadrado(i);
             gridDiv.appendChild(svgImage);
         }, i * delay);
     }
 }
 
-function createSVG(id) {
+function createCuadrado(id) {
     const data = getElementData(id);
 
     let color = data ? data.color : dafaultColor;
@@ -55,7 +55,7 @@ function createSVG(id) {
     return container;
 }
 
-function updateSVG(data) {
+function updateCuadrado(data) {
     const cuadrado = document.getElementById(data.id);
     cuadrado.style.background = `#${data.color}`
     cuadrado.querySelector("div").textContent = data.color;
@@ -68,7 +68,13 @@ async function getData() {
             return data;
         })
         .catch(error => {
-            console.error('Error fetching data:', error);
+            showDialog('Error retrieving token data', dialogColor.red, dialogIcon.alert, {
+                duration: 4000,
+                link: {
+                    url:'./log.html?message=' + error.message.replace(/(\r\n|\r|\n)/g, '<br>'),
+                    title: 'See details'
+                }
+            })
         });
 
     return data;
@@ -79,8 +85,8 @@ function getElementData(id) {
     return result;
 }
 
-socket.on('update', data => {
-    updateSVG(data);
+socket.on('tokenUpdated', data => {
+    updateCuadrado(data);
 });
 
 function updateElementSize() {
@@ -157,7 +163,11 @@ async function manageError(error, options) {
                 mint(options.tokenId);
             } catch (error) {
                 showDialog('Switch to Polygon Mumbai', dialogColor.red, dialogIcon.shuffle, {
-                    duration: 4000
+                    duration: 4000,
+                    onclick: {
+                        function: changeNetwork,
+                        title: 'Switch'
+                    }
                 })
             }
             break;
@@ -168,7 +178,7 @@ async function manageError(error, options) {
                     url:'./log.html?message=' + message,
                     title: 'See details'
                 }
-            })
+            });
             break;
         case "ContractFunctionExecutionError":
             showDialog('Execution error', dialogColor.red, dialogIcon.alert, {
@@ -177,7 +187,7 @@ async function manageError(error, options) {
                     url:'./log.html?message=' + message,
                     title: 'See details'
                 }
-            })
+            });
             break;
         default:
             console.error('Error:', message);

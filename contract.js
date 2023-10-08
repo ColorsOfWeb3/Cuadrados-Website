@@ -79,10 +79,8 @@ async function getOwner(tokenId) {
             chainId: 80001
         })
 
-
-        console.log('Minting transaction hash:', hash);
     } catch (error) {
-        manageError(error, { tokenId: tokenId });
+        
     }
 }
 
@@ -91,5 +89,6 @@ export {
     changeNetwork,
     subscribe,
     account,
-    mint
+    mint,
+    getOwner
 }

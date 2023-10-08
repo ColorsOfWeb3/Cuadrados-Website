@@ -1,46 +1,52 @@
-const { searchByTokenId, create, update } = require("./dataManager/dataManager.js")
-const { getTokenURI } = require("./web3/readContract.js")
+const { searchByTokenId, create, update, remove } = require("./dataManager/dataManager.js")
+const { getTokenURI, getOwner } = require("./web3/readContract.js")
 const { base64ToJSON, getColor } = require("./utils/utils.js")
 const { subscribeToEvents } = require("./web3/trackERC721.js")
+const { newLog } = require("./dataManager/logManager.js")
 
 async function saveData(from, to, tokenId, transaction) {
     try {
         const data = searchByTokenId(tokenId)
         if (data == undefined || data.transaction != transaction) {
-            if (data == undefined) {
-                create(tokenId, "D6D1D8", to, transaction)
-                console.log(`Mint: From: ${from}, To: ${to}, TokenId: ${tokenId}`)
-            } else {
-                update(tokenId, data.color, to, transaction)
-                console.log(`Transfer: From: ${from}, To: ${to}, TokenId: ${tokenId}`)
-            }
-            const uri = await getTokenURI(tokenId);
-            const color = getColor(base64ToJSON(uri));
-            update(tokenId, color, to, transaction);
-            global.io.emit("update", {id: tokenId, color: color});
-        } else {
-            console.log(`Transaction control (${transaction})`);
-        }
-    } catch (error) {
-        console.error("Error occurred:", error);
-    }
-}
-
-async function updateData(from, to) {
-    try {
-        for (let i = from; i < to; i++) {
-            const data = searchByTokenId(i)
             const uri = await getTokenURI(tokenId);
             const color = getColor(base64ToJSON(uri));
             if (data == undefined) {
                 create(tokenId, color, to, transaction)
+                newLog('TokenMint', `Token ${tokenId} minted by ${to}`);
             } else {
                 update(tokenId, color, to, transaction)
+                newLog('TokenTransfer', `Token ${tokenId} transfered from ${from} to ${to}`);
             }
+        } else {
+            newLog('TransactionControl', `Transaction control applied for ${transaction}`);
         }
     } catch (error) {
-        console.error("Error occurred:", error);
+        newLog(error.name, error.message);
     }
+}
+
+async function updateData(from, to) {
+    
+        for (let i = from; i < to; i++) {
+            try {
+                const data = searchByTokenId(i);
+                const uri = await getTokenURI(i);
+                const owner = await getOwner(i);
+                const color = getColor(base64ToJSON(uri));
+                if (data == undefined) {
+                    create(i, color, owner, '');
+                } else {
+                    update(i, color, owner, '');
+                }
+                console.log(`Token ${i} data updated.`);
+                newLog('TokenDataUpdated', `Token ${i} data updated`);
+            } catch (error) {
+                remove(i);
+                console.log(`Token ${i} data not found`);
+                newLog('TokenDataNotFound', `Token ${i} data not found`);
+            }
+        }
+
 }
 
 async function updateDataInBatch(from, to) {
@@ -58,16 +64,16 @@ async function updateDataInBatch(from, to) {
             }
         }
     } catch (error) {
-        console.error("Error occurred:", error);
+        newLog(error.name, error.message);
     }
 }
 
-function init() {
+function initDataManager() {
     subscribeToEvents(saveData);
 }
 
 module.exports = {
-    init,
+    initDataManager,
     updateData,
     updateDataInBatch
 }

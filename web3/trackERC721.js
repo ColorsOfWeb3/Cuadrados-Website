@@ -1,3 +1,4 @@
+const { newLog } = require("../dataManager/logManager.js");
 const { Web3 } = require("web3");
 const web3 = new Web3("wss://polygon-mumbai.infura.io/ws/v3/f7c05a718c5e4eb6b12f251b0f5f480b");
 
@@ -46,10 +47,10 @@ async function subscribeToEvents(callback) {
         });
 
         subscription.on("error", (error) => {
-            console.error("Error occurred:", error);
+            newLog(error.name, error.message);
         });
     } catch (error) {
-        console.error("Error occurred:", error);
+        newLog(error.name, error.message);
     }
 }
 

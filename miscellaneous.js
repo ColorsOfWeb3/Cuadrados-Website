@@ -20,35 +20,42 @@ var timeout;
 function showDialog(message, color, icon, options) {
     options = options || {};
 
+    const dialog = document.getElementById('dialog');
+    const dialogIcon = document.getElementById('dialogIcon');
+    const dialogTitle = document.getElementById('dialogTitle');
+    const dialogLink = document.getElementById('dialogLink');
+
     clearTimeout(timeout);
-    document.getElementById('dialogIcon').innerHTML = icon
-    document.getElementById('dialogTitle').innerHTML = message;
+    dialogIcon.innerHTML = icon
+    dialogTitle.innerHTML = message;
     if (options.link !== undefined) {
-        document.getElementById('dialogLink').setAttribute('href', options.link.url);
-        document.getElementById('dialogLink').innerHTML = options.link.title;
+        dialogLink.setAttribute('href', options.link.url);
+        dialogLink.innerHTML = options.link.title;
     } else {
-        document.getElementById('dialogLink').setAttribute('href', '#');
+        dialogLink.setAttribute('href', '#');
     }
     if (options.onclick !== undefined) {
+        let element = dialogLink;
+        element.parentNode.replaceChild(element.cloneNode(true), element);
         document.getElementById('dialogLink').addEventListener('click', () => {
             options.onclick.function();
             return false;
         })
         document.getElementById('dialogLink').innerHTML = options.onclick.title;
     } else {
-        let element = document.getElementById('dialogLink')
+        let element = dialogLink;
         element.parentNode.replaceChild(element.cloneNode(true), element)
     }
     if (!options.onclick && !options.link) {
-        document.getElementById('dialogLink').innerHTML = '';
+        dialogLink.innerHTML = '';
     }
-    document.getElementById('dialog').style.backgroundColor = color;
-    document.getElementById('dialog').style.opacity = '100';
-    document.getElementById('dialog').style.visibility = 'visible';
+    dialog.style.backgroundColor = color;
+    dialog.style.opacity = '100';
+    dialog.style.visibility = 'visible';
     if (options.duration !== undefined) {
         timeout = setTimeout(() => {
-            document.getElementById('dialog').style.opacity = '0';
-            document.getElementById('dialog').style.visibility = 'hidden';
+            dialog.style.opacity = '0';
+            dialog.style.visibility = 'hidden';
         }, options.duration);
     }
 }
