@@ -31,7 +31,7 @@ app.get("/data", (req, res) => {
 
 });
 
-updateDataInBatch(0, 1225);
+//updateDataInBatch(0, 1225);
 initDataManager();
 
 server.listen(process.env.PORT || 3000, () => console.log(`App available on http://localhost:3000`))

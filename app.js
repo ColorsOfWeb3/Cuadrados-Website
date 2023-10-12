@@ -43,7 +43,7 @@ function createCuadrado(id) {
             showDialog(`Minting Cuadrado #${id}...`, dialogColor.blue, dialogIcon.alert, {
                 duration: 6000,
                 link: {
-                    url: "https://mumbai.polygonscan.com/tx/" + response.value,
+                    url: "https://etherscan.io/tx/" + response.value,
                     title: "Transaction details"
                 }
             })
@@ -162,7 +162,7 @@ async function manageError(error, options) {
                 await changeNetwork();
                 mint(options.tokenId);
             } catch (error) {
-                showDialog('Switch to Polygon Mumbai', dialogColor.red, dialogIcon.shuffle, {
+                showDialog('Switch to Ethereum Mainnet', dialogColor.red, dialogIcon.shuffle, {
                     duration: 4000,
                     onclick: {
                         function: changeNetwork,

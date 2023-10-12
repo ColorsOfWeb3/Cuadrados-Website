@@ -1,6 +1,6 @@
 import contractABI from './web3/ABI.json' assert { type: "json" };
 
-const contractAddress = '0x2bA9aD99995484cf9ad205f37d4Bd679a4a67281';
+const contractAddress = '0xF5e6ec4f23b9318Ab52Ab86B35A65eB8c556C193';
 
 import {
     EthereumClient,
@@ -13,11 +13,11 @@ import {
 import { Web3Modal } from 'https://unpkg.com/@web3modal/html@2.6.2'
 
 
-const { polygonMumbai } = WagmiCoreChains;
+const { mainnet } = WagmiCoreChains;
 const { configureChains, createConfig, switchNetwork, writeContract } = WagmiCore;
 
 
-const chains = [polygonMumbai];
+const chains = [mainnet];
 const projectId = "4134cb63bbad78412b5dcae41bc3d964";
 
 
@@ -31,7 +31,7 @@ const wagmiConfig = createConfig({
 
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 const web3modal = new Web3Modal({ projectId }, ethereumClient)
-web3modal.setDefaultChain(polygonMumbai)
+web3modal.setDefaultChain(mainnet)
 
 function connect() {
     web3modal.openModal();
@@ -39,7 +39,7 @@ function connect() {
 
 async function changeNetwork() {
     await switchNetwork({
-        chainId: 80001,
+        chainId: 1,
     });
 }
 
@@ -60,7 +60,7 @@ async function mint(tokenId) {
             abi: contractABI,
             functionName: 'mint',
             args: [tokenId],
-            chainId: 80001
+            chainId: 1
         })
 
         return {status: 'OK', value: hash}
@@ -69,26 +69,10 @@ async function mint(tokenId) {
     }
 }
 
-async function getOwner(tokenId) {
-    try {
-        const data = await readContract({
-            address: contractAddress,
-            abi: wagmigotchiABI,
-            functionName: 'ownerOf',
-            args: [tokenId],
-            chainId: 80001
-        })
-
-    } catch (error) {
-        
-    }
-}
-
 export {
     connect,
     changeNetwork,
     subscribe,
     account,
-    mint,
-    getOwner
+    mint
 }
