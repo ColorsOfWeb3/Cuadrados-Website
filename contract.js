@@ -60,6 +60,7 @@ async function mint(tokenId) {
             abi: contractABI,
             functionName: 'mint',
             args: [tokenId],
+            value: '10000000000000000',
             chainId: 1
         })
 
