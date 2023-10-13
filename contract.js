@@ -14,7 +14,7 @@ import { Web3Modal } from 'https://unpkg.com/@web3modal/html@2.6.2'
 
 
 const { mainnet } = WagmiCoreChains;
-const { configureChains, createConfig, switchNetwork, writeContract } = WagmiCore;
+const { configureChains, createConfig, switchNetwork, writeContract, readContract } = WagmiCore;
 
 
 const chains = [mainnet];
@@ -55,16 +55,36 @@ function account() {
 
 async function mint(tokenId) {
     try {
-        const { hash } = await writeContract({
+        const response = await mintPrice()
+        if (response.status == 'OK') {
+            const { hash } = await writeContract({
+                address: contractAddress,
+                abi: contractABI,
+                functionName: 'mint',
+                args: [tokenId],
+                value: response.value,
+                chainId: 1
+            })
+    
+            return {status: 'OK', value: hash}
+        } else {
+            return {status: 'KO', value: response.value}
+        }
+    } catch (error) {
+        return {status: 'KO', value: error}
+    }
+}
+
+async function mintPrice() {
+    try {
+        const data = await readContract({
             address: contractAddress,
             abi: contractABI,
-            functionName: 'mint',
-            args: [tokenId],
-            value: '10000000000000000',
+            functionName: 'mintPrice',
             chainId: 1
         })
 
-        return {status: 'OK', value: hash}
+        return {status: 'OK', value: data}
     } catch (error) {
         return {status: 'KO', value: error}
     }

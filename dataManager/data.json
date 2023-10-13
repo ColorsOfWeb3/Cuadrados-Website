@@ -1,1 +1,8 @@
-[]
+[
+    {
+        "tokenId": 0,
+        "color": "c692E9",
+        "owner": "0x5c8619e2fEf93f38c8C5bAe6C86cEA2050bbb7B9",
+        "transaction": "0x79f42f9271768c10c70d0577529d8baa8bc37d1b8b784b3ce92bc5aa4665bd7b"
+    }
+]
