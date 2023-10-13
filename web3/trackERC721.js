@@ -2,7 +2,7 @@ const { newLog } = require("../dataManager/logManager.js");
 const { Web3 } = require("web3");
 const web3 = new Web3("wss://mainnet.infura.io/ws/v3/f7c05a718c5e4eb6b12f251b0f5f480b");
 
-const contractAddress = "0xF5e6ec4f23b9318Ab52Ab86B35A65eB8c556C193";
+const contractAddress = "0xf5e6ec4f23b9318ab52ab86b35a65eb8c556c193";
 
 let options721 = {
     topics: [web3.utils.sha3("Transfer(address,address,uint256)")],

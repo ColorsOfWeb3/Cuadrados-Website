@@ -1,6 +1,6 @@
 import contractABI from './web3/ABI.json' assert { type: "json" };
 
-const contractAddress = '0xF5e6ec4f23b9318Ab52Ab86B35A65eB8c556C193';
+const contractAddress = '0xf5e6ec4f23b9318ab52ab86b35a65eb8c556c193';
 
 import {
     EthereumClient,
