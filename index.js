@@ -1,5 +1,6 @@
 const express = require("express");
 const { read, searchByTokenId } = require("./dataManager/dataManager.js")
+const { readLog } = require("./dataManager/logManager.js")
 const { initDataManager, updateDataInBatch } = require("./manager");
 
 const app = express();
@@ -27,6 +28,13 @@ app.get("/data", (req, res) => {
         data = searchByTokenId(id);
     }
 
+    res.json(data);
+
+});
+
+app.get("/logs", (req, res) => {
+
+    let data = readLog();
     res.json(data);
 
 });
