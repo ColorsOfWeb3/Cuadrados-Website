@@ -4,17 +4,25 @@
 <head>
     <title>Cuadrados, colors of Web3</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="home.js" type="module"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
+
 <body>
-    <div class="container">
-        <div class="cuadrado"></div>
-        <div class="flex-column" style="gap: min(2vh, 4vw);">
+    <div id="container" class="container">
+        <div id="cuadrado" class="cuadrado"></div>
+        <div id="main" class="main" style="gap: min(2vh, 4vw);">
             <div class="flex-column">
-                <h1>Cuadrados.</h1>
+                <h1 style="position: relative; height: min(7vh, 14vw); width: 100%;">
+                    <span class="title">Cuadrados.</span>
+                    <span class="title"></span>
+                </h1>
                 <h3>Colors of Web3.</h3>
             </div>
-            <button onclick="location.href = './app.html'">Launch Dapp</button>
+            <div class="flex-row" style="gap: min(1.2vh, 2.4vw);">
+                <button onclick="location.href = './app.html'">Launch Dapp</button>
+                <button id="connect" class="connect-button">Connect<div id="connectStatus"></div></button>
+            </div>
             <div class="flex-row" style="gap: min(1.2vh, 2.4vw);">
                 <a href="https://twitter.com/ColorsOfWeb3">
                     <img class="icon" title="twitter-x" src="img/logos/twitter-x-logo.svg" alt="twitter-x">
@@ -29,4 +37,5 @@
         </div>
     </div>
 </body>
+
 </html>

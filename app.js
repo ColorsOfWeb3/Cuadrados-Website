@@ -18,6 +18,8 @@ async function initGrid() {
             gridDiv.appendChild(svgImage);
         }, i * delay);
     }
+    document.getElementById("grid").style.opacity = 100;
+    document.getElementById("grid").style.visibility = 'visible';
 }
 
 function createCuadrado(id) {
