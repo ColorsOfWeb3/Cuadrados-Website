@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Cuadrados, colors of Web3</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="profile.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+</head>
+
+<body>
+    <div id="container" class="container">
+        <div id="cuadrado" class="cuadrado"></div>
+        <div id="main" class="main" style="gap: min(2vh, 4vw);">
+            <h1 id="color"></h1>
+            <h3 id="address"></h3>
+        </div>
+        <p>@ColorsOfWeb3</p>
+    </div>
+    <button onclick="download()">Save 📥</button>
+    <script>
+        const params = new URL(window.location.toLocaleString()).searchParams;
+        let address = params.get('address');
+
+        if (address.substring(0, 2) != "0x" || address.length != 42) {
+            address = "";
+        }
+
+        const code = address.toUpperCase().substring(2, 14).split("");
+        const color = code[1] + code[3] + code[5] + code[7] + code[9] + code[11]
+        const colorCode = '#' + color;
+        document.getElementById("cuadrado").style.background = colorCode;
+        document.getElementById("color").innerHTML = colorCode;
+        if(address == "") {
+            document.getElementById("address").innerHTML = "Invalid wallet address";
+        } else {
+            document.getElementById("address").innerHTML = address;
+        }
+
+        document.getElementById("container").style.opacity = 100;
+        document.getElementById("container").style.visibility = 'visible';
+
+        async function download() {
+            let canvas = await html2canvas(document.getElementById("container"), {
+                windowWidth: 1600,
+                windowHeight: 1600
+            });
+            var a = document.createElement('a');
+            a.href = canvas.toDataURL();
+            a.download = color;
+            a.click();
+        }
+    </script>
+</body>
+
+</html>

@@ -4,6 +4,15 @@ const cuadrado = document.getElementById('cuadrado');
 const connectButton = document.getElementById("connect");
 const user = account();
 
+var titles = document.getElementsByClassName('title');
+var titleArray = [];
+var currentTitle = 0;
+
+titles[currentTitle].style.opacity = 1;
+for (var i = 0; i < titles.length; i++) {
+    splitTitle(titles[i]);
+}
+
 document.getElementById("connect").addEventListener("click", async () => {
     connect();
 });
@@ -30,16 +39,15 @@ subscribe(() => {
 
 function connected(address){
     const code = address.substring(2, 14).toUpperCase().split("");
-    const colorCode = '#' + code[1] + code[3] + code[5] + code[7] + code[9] + code[11]
+    const colorCode = '#' + code[1] + code[3] + code[5] + code[7] + code[9] + code[11];
+    updateTitle(1, colorCode);
 
     cuadrado.classList.toggle('hidden');
     setTimeout(() => {
         cuadrado.style.background = colorCode;
         cuadrado.classList.toggle('hidden');
-        titles[1].innerHTML = colorCode;
-        updateTitle(1);
         changeToTitle(1);
-    }, 1000);
+    }, 800);
 }
 
 function disconnected(){
@@ -48,47 +56,12 @@ function disconnected(){
         cuadrado.style.background = "";
         cuadrado.classList.toggle('hidden');
         changeToTitle(0);
-    }, 1000);
+    }, 800);
 }
 
-function validateAddress() {
-
-    let form = document.getElementById("colorChecker");
-    let address = document.getElementById("colorAddress");
-
-    if (address.value.substring(0, 2) != "0x" || address.value.length != 42) {
-        return false;
-    }
-
-    const code = address.value.substring(2, 14).toUpperCase().split("");
-    const colorCode = '#' + code[1] + code[3] + code[5] + code[7] + code[9] + code[11]
-
-    let cuadrado = document.getElementById('cuadrado');
-    cuadrado.classList.toggle('hidden');
-    setTimeout(() => {
-        cuadrado.style.background = colorCode;
-        cuadrado.classList.toggle('hidden');
-        titles[1].innerHTML = colorCode;
-        updateTitle(1);
-        changeToTitle(1);
-    }, 1000);
-
-    return false;
-
-};
-
-var titles = document.getElementsByClassName('title');
-var titleArray = [];
-var currentTitle = 0;
-
-titles[currentTitle].style.opacity = 1;
-for (var i = 0; i < titles.length; i++) {
-    splitTitle(titles[i]);
-}
-
-function updateTitle(position) {
+function updateTitle(position, newTitle) {
     let word = titles[position];
-    var content = word.innerHTML;
+    var content = newTitle;
     word.innerHTML = '';
     var letters = [];
     for (var i = 0; i < content.length; i++) {

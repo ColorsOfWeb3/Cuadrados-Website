@@ -1,0 +1,112 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    visibility: hidden;
+    gap: min(8vh, 16vw);
+    width: 100%;
+    transition: .8s;
+}
+
+.cuadrado {
+    border-radius: min(2vh, 4vw);
+    height: 40vh;
+    max-height: 80vw;
+    aspect-ratio: 1;
+    animation: float 15s ease-in-out infinite;
+    background: linear-gradient(to bottom right,
+            #2C3E50, #FD746C,
+            #FF8235, #ffff1c,
+            #92FE9D, #00C9FF,
+            #a044ff, #e73827);
+    background-size: 1400% 1400%;
+    transition: .8s;
+}
+
+.main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 35vh;
+}
+
+.icon {
+    height: min(3vh, 6vw);
+}
+
+.connect-button {
+    position: relative;
+    background-color: #dcdde1;
+    color: #353b48;
+    border-radius: min(0.6vh, 1.2vw);
+    border: none;
+    font-size: min(2vh, 4vw);
+    padding: min(0.8vh, 1.6vw);
+    cursor: pointer;
+    width: fit-content;
+    transition: .2s;
+    padding-right: min(4vh, 8vw);
+}
+
+.connect-button div {
+    position: absolute;
+    height: min(1.5vh, 3vw);
+    aspect-ratio: 1;
+    background: #e84118;
+    border-radius: 50%;
+    transform: translatey(-50%);
+    top: 50%;
+    right: min(1vh, 2vw);
+}
+
+.connect-button button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 min(0.2vh, 0.4vw) min(0.6vh, 1.2vw) hsla(215, 15%, 22%, 0.3);
+}
+
+.title {
+    position: absolute;
+    opacity: 0;
+}
+
+.letter {
+    display: inline-block;
+    transform: translateZ(25px);
+    transform-origin: 50% 50% 25px;
+}
+
+.letter.out {
+    transform: rotateX(90deg);
+    transition: transform 0.32s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.letter.behind {
+    transform: rotateX(-90deg);
+}
+
+.letter.in {
+    transform: rotateX(0deg);
+    transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes float {
+    0% {
+        box-shadow: 0 min(0.5vh, 1vw) min(1.5vh, 2vw) 0px rgba(0, 0, 0, 0.6);
+        background-position: 0% 50%;
+        transform: translatey(0px);
+    }
+
+    50% {
+        box-shadow: 0 min(2.5vh, 5vw) min(1.5vh, 2vw) 0px rgba(0, 0, 0, 0.2);
+        background-position: 100% 50%;
+        transform: translatey(-20px);
+    }
+
+    100% {
+        box-shadow: 0 min(0.5vh, 1vw) min(1.5vh, 2vw) 0px rgba(0, 0, 0, 0.6);
+        background-position: 0% 50%;
+        transform: translatey(0px);
+    }
+}

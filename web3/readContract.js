@@ -22,7 +22,14 @@ async function getOwner(tokenId) {
     return owner;
 }
 
+async function getBalance(address) {
+    const balance = await contract.methods.balanceOf(address).call();
+    return balance;
+}
+
+
 module.exports = {
     getTokenURI,
-    getOwner
+    getOwner,
+    getBalance
 }
