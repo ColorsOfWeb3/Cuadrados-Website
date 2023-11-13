@@ -66,7 +66,7 @@ function updateTitle(position, newTitle) {
     var letters = [];
     for (var i = 0; i < content.length; i++) {
         var letter = document.createElement('span');
-        letter.className = 'letter';
+        letter.className = 'letter out';
         letter.innerHTML = content.charAt(i);
         word.appendChild(letter);
         letters.push(letter);
